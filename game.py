@@ -1,46 +1,91 @@
-#Importing a package to extend Python (just like we extend Sublime)
-#ALWAYS KEEP IMPORTS AT THE TOP
 from random import randint
 
-# [] => this is an array
-# name = [value1, value2, value3]
-#array is a container that can hold multiple items, like an egg carton.
-# arrays are indexed, contents are assignes as number
-#the index always starts at 0
 choices = ["rock", "paper", "scissors"]
+total_lives = 3
+player_lives = total_lives
+computer_lives = total_lives
+player_choice = False
 
-#Version 1, to explain array indexing
-#player_choice = choices [1]
-#print("index 1 in the choice array is " + player_choice + ", which is paper")
-
-player_choice = input("choose rock, paper, or scissors: ")
-
-print("user chose " + player_choice)
-
-# This will be the AI choice -> a random pick from the choices array
-computer_choice = choices[randint(0, 2)]
-
-print("computer chose " + computer_choice)
-
-# The following is a conditional
-
-if computer_choice == player_choice:
-	print("tie")
-
-elif computer_choice == "rock":
-	if player_choice == "scissors":
-		print("you lose!")
+#define a win / lose function and refer to it (invoke) in our game loop
+def winorlose(status):
+	if status == "won":
+		pre_message = "You are the winner!"
 	else:
-		print("you win!")
+		pre_message = "You are the loser!"
 
-elif computer_choice == "paper":
-	if player_choice == "scissors":
-		print("you win!")
-	else:
-		print("you lose!")
+		print(pre_message + 'Would you like to play again?')
 
-elif computer_choice == "scissors":
-	if player_choice == "paper":
-		print("you lose!")
-	else:
-		print("you win!")
+		choice = False
+
+		while choice == False:
+			choice = input("Y / N? ")
+
+			if choice == "Y" or choice == "y":
+				# reset the game loop and start over again
+				global player_lives
+				global computer_lives
+				global total_lives
+
+				player_lives = total_lives
+				computer_lives = total_lives
+			elif choice == "N" or choice == "n":
+				# exit message and quit
+				print("You chose to quit, better luck next time!")
+				exit()
+			else:
+				print("Make a valid choice - Y or N")
+				choice = False
+
+	while player_choice is False:
+		print("==========*/ RPS GAME */===========")
+		print("Computer Lives:", computer_lives, "/", total_lives)
+		print("Player Lives:", player_lives, "/", total_lives)
+		print("===================================")
+		print("Choose your weapon! Or type 'quit' to exit.\n")
+		player_choice = input("Choose rock, paper, or scissors: \n")
+
+		if player_choice == "quit":
+			print("You chose to quit.")
+			exit()
+
+		computer_choice = choices[randint(0, 2)]
+
+		print("user chose: " + player_choice)
+		print("computer chose: " + computer_choice)
+
+		if computer_choice == player_choice:
+			print("tie")
+		elif computer_choice == "rock":
+			if player_choice == "scissors":
+				player_lives -= 1
+				print("You lose! Player lives:", player_lives)
+			else:
+				print("You win!")
+				computer_lives -= 1
+		elif computer_choice == "paper":
+			if player_choice == "rock":
+				player_lives -= 1
+				print("You lose! Player lives:", player_lives)
+			else:
+				print("You win!")
+				computer_lives -= 1
+		elif computer_choice == "scissors":
+			if player_choice == "paper":
+				player_lives -= 1
+				print("You lose! Player lives:", player_lives)
+			else:
+				print("You win!")
+				computer_lives -= 1
+
+		if player_lives == 0:
+			winorlose("lost")
+		elif computer_lives == 0:
+			winorlose("won")
+		else:
+			player_choice = False
+
+
+
+
+
+
