@@ -2,20 +2,9 @@
 #ALWAYS KEEP IMPORTS AT THE TOP
 from random import randint
 
-# [] => this is an array
-# name = [value1, value2, value3]
-#array is a container that can hold multiple items, like an egg carton.
-# arrays are indexed, contents are assignes as number
-#the index always starts at 0
-choices = ["rock", "paper", "scissors"]
-
-player_lives = 1
-computer_lives = 1
-total_lives = 1
-
-#True or False are Boolean data types
-#essentially, they're equivalent to an on or off switch, 1 or 0.
-player_choice = False
+#re-import our game variables
+#gameVars is a subcomponent of the gameComponents pckg
+from gameComponents import gameVars
 
 #Define a win or lose funtion
 def winorlose(status):
